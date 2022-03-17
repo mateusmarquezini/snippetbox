@@ -10,12 +10,13 @@ import (
 )
 
 func (app *application) home(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
 	if r.URL.Path != "/" {
 		app.notFound(w)
 		return
 	}
 
-	s, err := app.snippets.Latest()
+	s, err := app.snippets.Latest(ctx)
 	if err != nil {
 		app.serverError(w, err)
 		return
